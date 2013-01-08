@@ -17,12 +17,16 @@
   </h4>
 <% end %>
 <% unless @quotes.nil? || @quotes.count == 0 %>
-  <form action="/rate_quotes" method="POST">
+  <% if @current_user %>
+    <form action="/rate_quotes" method="POST">
+  <% end %>
   <% @quotes.each do |q| %>
     <%= partial :quote, :locals => {quote: q } %>
   <% end %>
-  <button class="btn btn-primary">Rate!</button>
-  <input type="hidden" name="return_to" value="<%= request.fullpath %>">
-  </form>
+  <% if @current_user %>
+    <button class="btn btn-primary">Rate!</button>
+    <input type="hidden" name="return_to" value="<%= request.fullpath %>">
+    </form>
+  <% end %>
   <%= will_paginate @quotes %>
 <% end %>

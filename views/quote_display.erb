@@ -2,7 +2,7 @@
   <div class="well hero-unit">
     <blockquote>
       <h3><%= h @quote.quote %></h3>
-      <small>Added by <%= h @quote.nick %> from <%= h @quote.channel %> on <%= @quote.added.to_formatted_s(:long) %></small>
+      <small>Added by <a href="/users/<%= h @quote.nick %>"><%= h @quote.nick %></a> in <a href="<%= h @quote.channel.gsub("#","") %>"><%= h @quote.channel %></a> on <%= @quote.added.to_formatted_s(:long) %></small>
       <br>
       <p>Rating <b><%= h @quote.rating.round(2) %></b> from <b><%= h @quote.ratings_count %></b> ratings</p>
       <% if @current_user && @quote.nick_id != @current_user.id %>

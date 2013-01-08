@@ -1,6 +1,6 @@
 <div class="well">
   <p><%= h quote.quote %></p>
-  <small>Added by <a href="/users/<%= h quote.nick %>"><%= h quote.nick %></a> on <%= h quote.added.to_formatted_s(:long) %></small>
+  <small>Added by <a href="/users/<%= h quote.nick %>"><%= h quote.nick %></a> in <a href="/channels/<%= h quote.channel.gsub("#","") %>"><%= h quote.channel %></a> on <%= h quote.added.to_formatted_s(:long) %></small>
   <br>
   <small>
     <a href="/quote/<%= h quote.id %>">Link</a> |
