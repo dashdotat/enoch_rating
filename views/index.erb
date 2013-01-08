@@ -16,7 +16,7 @@
     <%= @quotes.first.nick if /^\/users/ =~ request.path_info %>
   </h4>
 <% end %>
-<% unless @quotes.nil? %>
+<% unless @quotes.nil? || @quotes.count == 0 %>
   <form action="/rate_quotes" method="POST">
   <% @quotes.each do |q| %>
     <%= partial :quote, :locals => {quote: q } %>
