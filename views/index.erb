@@ -1,9 +1,14 @@
-<form action="/rate_quotes" method="POST">
 <% if request.path_info == "/" %>
   <h4>Top Rated Quotes</h4>
 <% elsif /^\/unrated/ =~ request.path_info %>
   <h4>My Unrated Quotes</h4>
   <small>This picks up unrated quotes for channels you've submitted a quote in currently</small>
+<% elsif /^\/search/ =~ request.path_info %>
+  <% if params[:q].nil? %>
+    <h4>You didn't specify anything to search for</h4>
+  <% else %>
+    <h4>Search Results for <%= params[:q] %></h4>
+  <% end %>
 <% else %>
   <h4>
     Top Rated Quotes for 
@@ -11,10 +16,13 @@
     <%= @quotes.first.nick if /^\/users/ =~ request.path_info %>
   </h4>
 <% end %>
-<% @quotes.each do |q| %>
-  <%= partial :quote, :locals => {quote: q } %>
+<% unless @quotes.nil? %>
+  <form action="/rate_quotes" method="POST">
+  <% @quotes.each do |q| %>
+    <%= partial :quote, :locals => {quote: q } %>
+  <% end %>
+  <button class="btn btn-primary">Rate!</button>
+  <input type="hidden" name="return_to" value="<%= request.fullpath %>">
+  </form>
+  <%= will_paginate @quotes %>
 <% end %>
-<button class="btn btn-primary">Rate!</button>
-<input type="hidden" name="return_to" value="<%= request.fullpath %>">
-</form>
-<%= will_paginate @quotes %>

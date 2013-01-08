@@ -22,6 +22,12 @@
           <ul class="nav nav-list enoch-sidenav">
             <li class="<%= "active" if request.path_info == "/" %>"><a href="/"><i class="icon-chevron-right"></i> Home</a></li>
             <li class="<%= "active" if /^\/channels/ =~ request.path_info %>"><a href="/channels"><i class="icon-chevron-right"></i> Channels</a></li>
+            <li class="divider"></li>
+            <li>
+              <form action="/search" method="GET" class="form-search form-inline">
+                <input class="input-small search-query" type="text" name="q" placeholder="look for"><button class="btn btn-mini">Search!</button>
+              </form>
+            </li>
             <% if @current_user %>
               <li class="divider"></li>
               <li class="<%= "active" if /^\/unrated/ =~ request.path_info %>"><a href="/unrated"><i class="icon-chevron-right"></i> My Unrated Quotes</a></li>

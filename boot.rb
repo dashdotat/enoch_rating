@@ -156,3 +156,12 @@ post '/rate_quotes' do
     redirect params[:return_to]
   end
 end
+
+get '/search' do
+  if params[:q].nil?
+    @quotes = nil
+  else
+    @quotes = Quote.where("quote LIKE ?", "%#{params[:q]}%").paginate(:page => page).order("rating DESC, ratings_count DESC")
+  end
+  erb :index
+end
