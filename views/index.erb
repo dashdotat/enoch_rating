@@ -1,0 +1,20 @@
+<form action="/rate_quotes" method="POST">
+<% if request.path_info == "/" %>
+  <h4>Top Rated Quotes</h4>
+<% elsif /^\/unrated/ =~ request.path_info %>
+  <h4>My Unrated Quotes</h4>
+  <small>This picks up unrated quotes for channels you've submitted a quote in currently</small>
+<% else %>
+  <h4>
+    Top Rated Quotes for 
+    <%= @quotes.first.channel if /^\/channels/ =~ request.path_info %>
+    <%= @quotes.first.nick if /^\/users/ =~ request.path_info %>
+  </h4>
+<% end %>
+<% @quotes.each do |q| %>
+  <%= partial :quote, :locals => {quote: q } %>
+<% end %>
+<button class="btn btn-primary">Rate!</button>
+<input type="hidden" name="return_to" value="<%= request.fullpath %>">
+</form>
+<%= will_paginate @quotes %>

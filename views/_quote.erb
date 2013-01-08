@@ -1,0 +1,18 @@
+<div class="well">
+  <p><%= h quote.quote %></p>
+  <small>Added by <a href="/users/<%= h quote.nick %>"><%= h quote.nick %></a> on <%= h quote.added.to_formatted_s(:long) %></small>
+  <br>
+  <small>
+    <a href="/quote/<%= h quote.id %>">Link</a> |
+    Rating <b><%= h quote.rating.round(2) %></b> from <b><%= h quote.ratings_count %></b> ratings
+  </small>
+  <% if @current_user && quote.nick_id != @current_user.id %>
+    <br>
+    <% my_rating = @current_user.ratings.select(:rating).where(:quote_id => quote.id).first %>
+    <% my_rating = my_rating.nil? ? 0 : my_rating.rating %>
+    <% (1..10).each do |i| %>
+      <% checked = my_rating == i ? "checked" : "" %>
+      <%= partial :rating_input, :locals => {i: i, quote: quote, checked: checked} %>
+    <% end %>
+  <% end %>
+</div>

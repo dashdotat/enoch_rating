@@ -1,0 +1,5 @@
+<ul>
+  <% @channels.each do |c| %>
+    <li><a href="/channels/<%= h c.channel.gsub("#","") %>"><%= h c.channel %></a></li>
+  <% end %> 
+</ul>

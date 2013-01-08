@@ -1,0 +1,21 @@
+<form action="/rate_quotes" method="POST">
+  <div class="well hero-unit">
+    <blockquote>
+      <h3><%= h @quote.quote %></h3>
+      <small>Added by <%= h @quote.nick %> from <%= h @quote.channel %> on <%= @quote.added.to_formatted_s(:long) %></small>
+      <br>
+      <p>Rating <b><%= h @quote.rating.round(2) %></b> from <b><%= h @quote.ratings_count %></b> ratings</p>
+      <% if @current_user && @quote.nick_id != @current_user.id %>
+        <% my_rating = @current_user.ratings.select(:rating).where(:quote_id => @quote.id).first %>
+        <% my_rating = my_rating.nil? ? 0 : my_rating.rating %>
+        <% (1..10).each do |i| %>
+          <% checked = my_rating == i ? "checked" : "" %>
+          <%= partial :rating_input, :locals => {i: i, quote: @quote, checked: checked} %>
+        <% end %>
+        <br>
+        <button class="btn btn-primary">Rate!</button>
+      <% end %>
+    </blockquote>
+  </div>
+  <input type="hidden" name="return_to" value="<%= request.fullpath %>">
+</form>

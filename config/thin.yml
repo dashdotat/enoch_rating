@@ -1,0 +1,4 @@
+servers: 3
+onebyone: true
+socket: tmp/socket/thin.sock
+environment: production

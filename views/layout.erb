@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Enoch Ratings</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="description" content="Web-based ratings system for Enoch">
+    <meta name="author" content="Kenwa Solutions http://www.kenwa-solutions.co.uk">
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <style>
+      body {
+        position: relative;
+        padding-top: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="span3 enoch-sidenav">
+          <ul class="nav nav-list enoch-sidenav">
+            <li class="<%= "active" if request.path_info == "/" %>"><a href="/"><i class="icon-chevron-right"></i> Home</a></li>
+            <li class="<%= "active" if /^\/channels/ =~ request.path_info %>"><a href="/channels"><i class="icon-chevron-right"></i> Channels</a></li>
+            <% if @current_user %>
+              <li class="divider"></li>
+              <li class="<%= "active" if /^\/unrated/ =~ request.path_info %>"><a href="/unrated"><i class="icon-chevron-right"></i> My Unrated Quotes</a></li>
+              <li><a href="/auth/logout"><i class="icon-chevron-right"></i> Logout</a></li>
+            <% end %>
+          </ul>
+        </div>
+        <div id="contentContainer" class="span9">
+          <% if flash[:error] %>
+            <div class="alert alert-error"><%= h flash[:error] %></div>
+          <% end %>
+          <% if flash[:info] %>
+            <div class="alert alert-info"><%= h flash[:info] %></div>
+          <% end %>
+          <%= yield %>
+        </div>
+      </div>
+      <hr>
+      <footer>
+        <p>This site &copy; Kenwa Solutions 2013</p>
+      </footer>
+    </div>
+    <script src="/assets/js/jquery-1.8.3.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+  </body>
+</html>
